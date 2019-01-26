@@ -11,10 +11,12 @@ class AddListItem extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    //console.log(this.props.listKey);
     const key = Date.now()
-    this.props.addNewListItem(key, this.props.listKey, this.input.current.value);
-    this.input.current.value = '';
+
+    if (this.input.current.value !== '') {
+      this.props.addNewListItem(key, this.props.listKey, this.input.current.value);
+      this.input.current.value = '';
+    }
   }
 
 

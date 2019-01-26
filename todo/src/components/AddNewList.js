@@ -10,10 +10,12 @@ class AddNewList extends React.Component {
   }
 
   handleSubmit(event) {
-    const key = Date.now()
-    this.props.addNewList(key, this.input.current.value);
-    this.input.current.value = '';
+    const key = Date.now();
     event.preventDefault();
+    if (this.input.current.value !== '') {
+      this.props.addNewList(key, this.input.current.value);
+      this.input.current.value = '';
+    }
   }
 
 // TODO:
