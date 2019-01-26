@@ -1,24 +1,44 @@
-//if the item has focus, render the input version for updating
-//if the item does not have focus, render the div
 import React from 'react';
+import ContentEditable from 'react-sane-contenteditable';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 class ListItem extends React.Component {
-  handleEdit = () => {
-
+  handleEdit = (event, value) => {
+    this.props.editListItem(this.props.listKey, this.props.index, value);
   }
 
   handleDelete = (event) => {
-    event.preventDefault();
-
     this.props.deleteListItem(this.props.listKey, this.props.index);
   }
 
+  markItemComplete = () => {
+    this.props.markItemComplete(this.props.listKey, this.props.index);
+  }
+
   render() {
+    const status = this.props.status;
     return (
-      <li className="list-group-item">
-        <button type="button" className="btn btn-link">Checkmark</button>
-        <div className='list-content' contentEditable="true">{this.props.content}</div>
-        <button type="button" className="btn btn-link" onClick={this.handleDelete}>X</button>
+      <li className={`list-group-item ${this.props.status}`}>
+        <div className='row'>
+        {status === 'todo'  &&
+          <button type="button" className="btn btn-link" onClick={this.markItemComplete}>
+            <FontAwesomeIcon icon={faCheckCircle} />
+          </button>
+        }
+        <ContentEditable
+          tagName="div"
+          className="list-content"
+          content={this.props.content}
+          editable={true}
+          maxLength={140}
+          multiLine={false}
+          onChange={this.handleEdit}
+        />
+        <button type="button" className="btn btn-link" onClick={this.handleDelete}>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+        </div>
       </li>
     )
   }

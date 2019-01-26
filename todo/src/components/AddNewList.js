@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 class AddNewList extends React.Component {
   constructor(props) {
@@ -22,7 +24,9 @@ class AddNewList extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <button className="btn btn-link" type='submit'>+</button>
+        <button className="btn btn-link" type='submit'>
+          <FontAwesomeIcon icon={faPlusCircle} />
+        </button>
         <input type="text" placeholder='new list name' ref={this.input} />
       </form>
     )
