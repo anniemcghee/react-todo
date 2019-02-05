@@ -3,99 +3,47 @@ import '../App.css';
 import base from '../base';
 import AddNewList from './AddNewList'
 import List from './List'
+import { observer } from "mobx-react";
+import { observable } from "mobx";
 
-//NEXT THINGS:
-// fix the delete bug splicing out the wrong thing eek
-// -firebase sync
-// align the things in list item
-
-
+@observer
 class App extends Component {
-  state = {
-    lists: {}
-  }
+  @observable lists = {};
 
   addNewList = (key, title) => {
-    const lists = {...this.state.lists};
-
-    lists[key] = { title: title, items: [] };
-
-    this.setState({
-      lists: lists
-    })
+    this.lists[key] = { title: title, items: [] };
   }
 
   addNewListItem = (key, listKey, content) => {
-    const lists = {...this.state.lists};
-
-    lists[listKey].items.push({ key: key, content: content, status: 'todo'});
-
-    this.setState({
-      lists: lists
-    })
+    this.lists[listKey].items.push({ key: key, content: content, status: 'todo'});
   }
 
   editListTitle = (listKey, title) => {
-    const lists = {...this.state.lists};
-
-    lists[listKey].title = title;
-
-    this.setState({
-      lists: lists
-    })
+    this.lists[listKey].title = title;
   }
 
   editListItem = (listKey, index, content) => {
-    const lists = {...this.state.lists};
-
-    lists[listKey].items[index].content = content;
-
-    this.setState({
-      lists: lists
-    })
+    this.lists[listKey].items[index].content = content;
   }
 
   markItemComplete = (listKey, index) => {
-    const lists = {...this.state.lists};
-
-    lists[listKey].items[index].status = 'complete';
-
-    this.setState({
-      lists: lists
-    })
+    this.lists[listKey].items[index].status = 'complete';
   }
 
   deleteListItem = (listKey, index) => {
-    const lists = {...this.state.lists};
-
-    lists[listKey].items.splice(index, 1);
-
-    this.setState({
-      lists: lists
-    })
+    this.lists[listKey].items.splice(index, 1);
   }
 
   markAllItemsComplete = (listKey) => {
-    const lists = {...this.state.lists};
-
-    lists[listKey].items.map(item => (
+    this.lists[listKey].items.map(item => (
       item.status = 'complete'
     ));
-
-    this.setState({
-      lists: lists
-    })
   }
 
   removeAllItemsInList = (listKey) => {
-    const lists = {...this.state.lists};
-    const itemsArray = lists[listKey].items;
+    const itemsArray = this.lists[listKey].items;
 
     itemsArray.splice(0, itemsArray.length);
-
-    this.setState({
-      lists: lists
-    })
   }
 
   // componentDidMount() {
@@ -119,13 +67,13 @@ class App extends Component {
 
         <div className="container">
           <div className='row'>
-          {Object.keys(this.state.lists).map(key => (
+          {Object.keys(this.lists).map(key => (
             <div className='col-sm-4'>
               <List
                 key={key}
                 listKey={key}
-                listTitle={this.state.lists[key].title}
-                listItems={this.state.lists[key].items}
+                listTitle={this.lists[key].title}
+                listItems={this.lists[key].items}
                 editListTitle={this.editListTitle}
                 editListItem={this.editListItem}
                 addNewListItem={this.addNewListItem}
