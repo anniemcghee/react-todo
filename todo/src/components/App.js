@@ -4,11 +4,10 @@ import base from '../base';
 import AddNewList from './AddNewList'
 import List from './List'
 
-
 //NEXT THINGS:
 // fix the delete bug splicing out the wrong thing eek
-// add validations for not adding empty list item or lists
 // -firebase sync
+// align the things in list item
 
 
 class App extends Component {
@@ -117,7 +116,6 @@ class App extends Component {
         <div className="container sidebar">
           <AddNewList addNewList={this.addNewList}/>
         </div>
-
 
         <div className="container">
           <div className='row'>
